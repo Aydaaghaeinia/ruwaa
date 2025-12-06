@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<!-- Initial language is Persian (RTL) -->
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پورتفولیو | آیدا آقائی نیا</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark-navy: #020c1b;
+            --bg-navy: #0a192f;
+            --text-lightest: #ccd6f6;
+            --text-light: #a8b2d1;
+            --text-dark: #8892b0;
+            --accent: #64ffda;
+            --accent-dark: rgba(100, 255, 218, 0.1);
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--bg-dark-navy);
+            color: var(--text-light);
+        }
+        
+        /* Background Spotlight Effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(29, 78, 216, 0.15), transparent 80%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        html[lang="fa"] body { font-family: 'Vazirmatn', sans-serif; }
+        html[lang="en"] body { font-family: 'Inter', sans-serif; }
+
+        .section-fade-in { opacity: 0; transition: opacity 0.5s ease-out; }
+        .section-fade-in.visible { opacity: 1; }
+        .section-fade-in.visible > * {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            font-size: 1.75rem; font-weight: 700; color: var(--text-lightest); white-space: nowrap;
+        }
+        html[dir="rtl"] .section-title::after { content: ''; display: block; position: relative; top: 2px; width: 100%; height: 1px; margin-right: 20px; background-color: #233554; }
+        html[dir="ltr"] .section-title::before { content: ''; display: block; position: relative; top: 2px; width: 100%; height: 1px; margin-left: 20px; background-color: #233554; }
+        
+        .font-mono { font-family: 'Menlo', 'Monaco', 'Consolas', 'Courier New', monospace; }
+        .card-bg { background-color: rgba(10, 25, 47, 0.85); backdrop-filter: blur(10px); border: 1px solid #192a49; transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, border-color 0.3s ease-out; }
+        .card-bg:hover { transform: translateY(-5px); box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7); border-color: var(--accent); }
+        
+        .tab-button { transition: all 0.25s cubic-bezier(0.645,0.045,0.355,1); }
+        html[dir="rtl"] .tab-button { border-right: 2px solid #233554; }
+        html[dir="ltr"] .tab-button { border-left: 2px solid #233554; }
+        html[dir="rtl"] .tab-button.active { border-right-color: var(--accent); }
+        html[dir="ltr"] .tab-button.active { border-left-color: var(--accent); }
+        .tab-button.active { color: var(--accent); background-color: var(--accent-dark); }
+        
+        .social-links { position: fixed; bottom: 0; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; z-index: 50; padding: 0 2.5rem; }
+        html[dir="rtl"] .social-links { left: 0; }
+        html[dir="ltr"] .social-links { right: 0; }
+        .social-links::after { content: ''; display: block; width: 1px; height: 90px; background-color: var(--text-dark); margin-top: 1rem; }
+        
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            transition: all 0.3s ease-in-out;
+        }
+        header.scrolled {
+            background-color: rgba(2, 12, 27, 0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px -10px rgba(2,12,27,0.7);
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
+        /* Preloader */
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-dark-navy); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease-out, visibility 0.5s ease-out; }
+        #preloader.loaded { opacity: 0; visibility: hidden; }
+        .loader-logo { font-family: monospace; font-size: 2.5rem; font-weight: 900; color: var(--accent); border: 3px solid var(--accent); padding: 0.5rem 1rem; animation: pulse 1.5s infinite ease-in-out; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    </style>
+</head>
+<body class="antialiased">
+    <div id="preloader"><div class="loader-logo">A/A</div></div>
+
+    <header class="py-6">
+        <div class="container mx-auto max-w-5xl px-6 flex justify-between items-center">
+             <div class="text-2xl font-black text-accent font-mono">A/A</div>
+             <div class="flex items-center gap-4">
+                <button data-lang="en" class="lang-switcher font-mono text-sm text-gray-400 hover:text-accent transition-colors">EN</button>
+                <span class="text-gray-600">/</span>
+                <button data-lang="fa" class="lang-switcher font-mono text-sm text-accent transition-colors">FA</button>
+             </div>
+        </div>
+    </header>
+
+    <div class="social-links hidden md:flex">
+        <a href="https://www.linkedin.com/in/ayda-aghaei-nia/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-accent transition-all duration-300 hover:transform hover:-translate-y-1 text-2xl"><i class="fab fa-linkedin"></i></a>
+        <a href="https://github.com/Aydaaghaeinia" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-accent transition-all duration-300 hover:transform hover:-translate-y-1 text-2xl"><i class="fab fa-github"></i></a>
+        <a href="tel:09220346532" class="text-gray-400 hover:text-accent transition-all duration-300 hover:transform hover:-translate-y-1 text-2xl"><i class="fas fa-phone"></i></a>
+    </div>
+    
+    <main class="container mx-auto max-w-4xl px-6 relative z-10">
+
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-screen flex flex-col justify-center section-fade-in">
+            <div>
+                <h1 data-key="heroName" class="text-5xl md:text-7xl font-black text-gray-200">آیدا آقائی نیا</h1>
+                <h2 data-key="heroTitle" class="text-4xl md:text-6xl font-black text-gray-400 mt-2">من یک توسعه‌دهنده هوش مصنوعی هستم.</h2>
+                <p data-key="heroDescription" class="mt-6 max-w-xl text-lg text-gray-400 leading-relaxed">
+                   توسعه‌دهنده هوش مصنوعی با انگیزه و متخصص در استفاده از مدل‌های زبان بزرگ و سیستم‌های چندوجهی برای خلق برنامه‌های نوآورانه در دنیای واقعی.
+                </p>
+                <div class="mt-12">
+                     <a data-key="contactButton" href="mailto:Aydaaghaeinia@gmail.com" class="text-accent border border-accent rounded-md px-8 py-3 font-medium hover:bg-accent-dark transition-colors duration-300">تماس با من</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary Section -->
+        <section id="summary" class="py-24 section-fade-in">
+            <h2 class="section-title">
+                <span class="accent-color font-mono text-2xl" data-key="summaryTitleNum">01.</span>
+                <span data-key="summaryTitle" class="me-3">خلاصه</span>
+            </h2>
+            <div class="mt-8 md:flex gap-10 items-start">
+                <div data-key="summaryParagraph" class="text-gray-300 text-lg leading-relaxed space-y-4 md:w-2/3">
+                    <p>توسعه‌دهنده هوش مصنوعی با انگیزه بالا و با مجموعه‌ای قوی از پروژه‌های عملی در NLP، بینایی کامپیوتر و هوش مصنوعی مولد. متخصص در استفاده از مدل‌های زبان بزرگ و سیستم‌های چندوجهی برای خلق برنامه‌های نوآورانه در دنیای واقعی. ترکیبی از مهارت‌های فنی عمیق با اشتیاق به مشارکت در جامعه، به اشتراک‌گذاری دانش و کاوش در مرزهای اخلاق و همسوسازی هوش مصنوعی. مشتاق برای کمک به تیمی که در حال ساخت راه‌حل‌های هوش مصنوعی تأثیرگذار و مسئولانه است.</p>
+                </div>
+                <div class="mt-8 md:mt-0 md:w-1/3">
+                    <div class="card-bg p-2 rounded-lg">
+                         <img src="img.jpg" alt="عکس پروفایل" class="rounded-md w-full">
+                    </div>
+                </div>
+            </div>
+             <div class="mt-12">
+                <h3 data-key="skillsTitle" class="font-bold text-xl text-gray-200 mb-6">مهارت‌های فنی</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 data-key="skillsGroupML" class="text-lg font-bold text-gray-200 mb-3">یادگیری ماشین (ML)</h4>
+                        <ul class="list-disc pr-5 space-y-2 text-gray-400 font-mono text-sm">
+                            <li data-key="skillML1">Regression, Classification</li>
+                            <li data-key="skillML2">Clustering, Dimensionality Reduction</li>
+                            <li data-key="skillML3">Ensemble Learning</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 data-key="skillsGroupDL" class="text-lg font-bold text-gray-200 mb-3">یادگیری عمیق (Deep Learning)</h4>
+                        <ul class="list-disc pr-5 space-y-2 text-gray-400 font-mono text-sm">
+                            <li data-key="skillDL1">ANN, CNN, RNN</li>
+                            <li data-key="skillDL2">Transformers, Attention Mechanism</li>
+                            <li data-key="skillDL3">GANs, Autoencoders</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 data-key="skillsGroupCV" class="text-lg font-bold text-gray-200 mb-3">بینایی کامپیوتر (CV)</h4>
+                        <ul class="list-disc pr-5 space-y-2 text-gray-400 font-mono text-sm">
+                            <li data-key="skillCV1">Image Classification, Object Detection</li>
+                            <li data-key="skillCV2">Image Segmentation</li>
+                            <li data-key="skillCV3">Face Recognition, Emotion AI</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 data-key="skillsGroupNLP" class="text-lg font-bold text-gray-200 mb-3">پردازش زبان طبیعی (NLP)</h4>
+                        <ul class="list-disc pr-5 space-y-2 text-gray-400 font-mono text-sm">
+                            <li data-key="skillNLP1">Text Classification, Sentiment Analysis</li>
+                            <li data-key="skillNLP2">Named Entity Recognition (NER)</li>
+                            <li data-key="skillNLP3">Language Modeling</li>
+                        </ul>
+                    </div>
+                     <div>
+                        <h4 data-key="skillsGroupLLM" class="text-lg font-bold text-gray-200 mb-3">مدل‌های زبان بزرگ (LLM)</h4>
+                        <ul class="list-disc pr-5 space-y-2 text-gray-400 font-mono text-sm">
+                            <li data-key="skillLLM1">Prompt Engineering, Fine-tuning</li>
+                            <li data-key="skillLLM2">Retrieval-Augmented Generation (RAG)</li>
+                            <li data-key="skillLLM3">Multi-Modal Models</li>
+                        </ul>
+                    </div>
+                     <div>
+                        <h4 data-key="skillsGroupLibs" class="text-lg font-bold text-gray-200 mb-3">کتابخانه‌ها و ابزارها</h4>
+                        <ul class="list-disc pr-5 space-y-2 text-gray-400 font-mono text-sm">
+                            <li data-key="skillLibs1">PyTorch, TensorFlow, Scikit-learn</li>
+                            <li data-key="skillLibs2">Hugging Face, OpenCV, MediaPipe</li>
+                            <li data-key="skillLibs3">Docker, Git, FastAPI</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="py-24 section-fade-in">
+             <h2 class="section-title">
+                <span class="accent-color font-mono text-2xl" data-key="expTitleNum">02.</span>
+                <span data-key="expTitle" class="me-3">سوابق شغلی</span>
+            </h2>
+            <div class="mt-12 md:flex gap-10">
+                <div class="flex flex-col">
+                    <button data-tab="0" class="tab-button active text-right px-5 py-3 w-full md:w-48 text-lg" data-key="expJob1Company">آهورا موبایل</button>
+                    <button data-tab="1" class="tab-button text-right px-5 py-3 w-full md:w-48 text-lg" data-key="expJob2Company">Tesco</button>
+                </div>
+                <div class="mt-6 md:mt-0">
+                    <div data-panel="0" class="tab-panel">
+                        <h3 class="text-2xl font-bold text-gray-200"><span data-key="expJob1Title">متخصص پشتیبانی سایت</span> <span class="accent-color">@ <span data-key="expJob1CompanyPanel">آهورا موبایل</span></span></h3>
+                        <p class="font-mono text-gray-400 mt-1" data-key="expJob1Date">۲۰۲۳ - ۲۰۲۴</p>
+                        <ul class="mt-4 list-disc pr-5 text-gray-300 space-y-2">
+                            <li data-key="expJob1Desc">ارائه پشتیبانی فنی و عیب‌یابی برای زیرساخت وب، بهبود عملکرد سایت و تضمین آپ‌تایم بالا از طریق نظارت فعال و حل مشکلات.</li>
+                        </ul>
+                    </div>
+                    <div data-panel="1" class="tab-panel hidden">
+                        <h3 class="text-2xl font-bold text-gray-200"><span data-key="expJob2Title">مدیریت فروشگاه و پشتیبانی نرم‌افزار</span> <span class="accent-color">@ <span data-key="expJob2CompanyPanel">Tesco</span></span></h3>
+                        <p class="font-mono text-gray-400 mt-1" data-key="expJob2Date">۲۰۲۳</p>
+                        <ul class="mt-4 list-disc pr-5 text-gray-300 space-y-2">
+                            <li data-key="expJob2Desc">مدیریت نرم‌افزار فروش و محصولات، ارائه پشتیبانی به کاربران و مشاوره به مشتریان برای افزایش رضایت و فروش.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-24 section-fade-in">
+            <h2 class="section-title">
+                <span class="accent-color font-mono text-2xl" data-key="projectsTitleNum">03.</span>
+                <span data-key="projectsTitle" class="me-3">پروژه‌های منتخب</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+                <!-- Project 1: Persian Poetry Bot -->
+                <div class="card-bg p-6 rounded-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-4"><i class="far fa-folder-open text-4xl accent-color"></i><a href="#" class="text-gray-400 hover:accent-color"><i class="fa fa-external-link-alt"></i></a></div>
+                        <h4 data-key="proj1Title" class="font-bold text-xl text-gray-200 hover:accent-color transition-colors cursor-pointer">ربات بازی شعر فارسی</h4>
+                        <p data-key="proj1Desc" class="text-sm leading-relaxed text-gray-400 mt-2">ساخت یک ربات شعر که با دریافت آخرین کلمه از یک بیت، بیت بعدی مناسب را برای ادامه بازی پیشنهاد می‌دهد.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-xs font-mono text-gray-400 mt-4"><span>Persian NLP</span><span>Dataset Processing</span></div>
+                </div>
+                <!-- Project 2: Speech Processing -->
+                <div class="card-bg p-6 rounded-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-4"><i class="far fa-folder-open text-4xl accent-color"></i><a href="#" class="text-gray-400 hover:accent-color"><i class="fa fa-external-link-alt"></i></a></div>
+                        <h4 data-key="proj2Title" class="font-bold text-xl text-gray-200 hover:accent-color transition-colors cursor-pointer">پردازش گفتار فارسی</h4>
+                        <p data-key="proj2Desc" class="text-sm leading-relaxed text-gray-400 mt-2">تحقیق و توسعه بر روی مدل‌های تبدیل گفتار به نوشتار فارسی، با برنامه‌ریزی برای ساخت مدل CTC مبتنی بر BiLSTM.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-xs font-mono text-gray-400 mt-4"><span>Speech Processing</span><span>Wav2Vec</span><span>CTC</span><span>BiLSTM</span></div>
+                </div>
+                <!-- Project 3: Interactive Character -->
+                <div class="card-bg p-6 rounded-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-4"><i class="far fa-folder-open text-4xl accent-color"></i><a href="#" class="text-gray-400 hover:accent-color"><i class="fa fa-external-link-alt"></i></a></div>
+                        <h4 data-key="proj3Title" class="font-bold text-xl text-gray-200 hover:accent-color transition-colors cursor-pointer">شخصیت تعاملی هوشمند</h4>
+                        <p data-key="proj3Desc" class="text-sm leading-relaxed text-gray-400 mt-2">طراحی یک کاراکتر انیمیشنی که با استفاده از تشخیص چهره و بدن، به حضور و حرکت افراد در محیط‌های عمومی (مانند مترو) واکنش نشان می‌دهد.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-xs font-mono text-gray-400 mt-4"><span>Interactive AI</span><span>Body/Face Detection</span><span>Animation</span></div>
+                </div>
+                <!-- Project 5: Creative Systems -->
+                <div class="card-bg p-6 rounded-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-4"><i class="far fa-folder-open text-4xl accent-color"></i><a href="#" class="text-gray-400 hover:accent-color"><i class="fa fa-external-link-alt"></i></a></div>
+                        <h4 data-key="proj5Title" class="font-bold text-xl text-gray-200 hover:accent-color transition-colors cursor-pointer">سیستم‌های تعاملی و خلاق</h4>
+                        <p data-key="proj5Desc" class="text-sm leading-relaxed text-gray-400 mt-2">طراحی ایده‌هایی مانند "تابلوی آرزوها" که با دریافت متن یا صوت، تصویری از آرزوی کاربر تولید می‌کند.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-xs font-mono text-gray-400 mt-4"><span>Creative AI</span><span>Text-to-Image</span><span>Generative Art</span></div>
+                </div>
+                <!-- Project 6: Other Projects -->
+                <div class="card-bg p-6 rounded-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-4"><i class="far fa-folder-open text-4xl accent-color"></i><a href="#" class="text-gray-400 hover:accent-color"><i class="fa fa-external-link-alt"></i></a></div>
+                        <h4 data-key="proj6Title" class="font-bold text-xl text-gray-200 hover:accent-color transition-colors cursor-pointer">پروژه‌های تحقیقاتی و تست</h4>
+                        <p data-key="proj6Desc" class="text-sm leading-relaxed text-gray-400 mt-2">کار بر روی OCR فارسی (مقایسه EasyOCR و Tesseract) و مشارکت در پروژه‌های اوپن‌سورس مانند AIDE-ML و Habitat-Sim.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-xs font-mono text-gray-400 mt-4"><span>OCR</span><span>Open Source</span><span>CrowdAI</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="py-24 section-fade-in">
+            <h2 class="section-title">
+                <span class="accent-color font-mono text-2xl" data-key="eduTitleNum">04.</span>
+                <span data-key="eduTitle" class="me-3">تحصیلات و گواهینامه‌ها</span>
+            </h2>
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="card-bg p-6 rounded-lg">
+                    <h3 data-key="edu1Title" class="font-bold text-lg text-gray-200">کاردانی مهندسی نرم‌افزار</h3>
+                    <p data-key="edu1Inst" class="text-gray-400">دانشگاه آزاد اسلامی - ۲۰۲۳</p>
+                </div>
+                <div class="card-bg p-6 rounded-lg">
+                    <h3 data-key="edu2Title" class="font-bold text-lg text-gray-200">برنامه توسعه استارتاپ - از ایده تا خروج</h3>
+                    <p data-key="edu2Inst" class="text-gray-400">دانشگاه صنعتی شریف - ۲۰۲۴</p>
+                </div>
+                 <div class="card-bg p-6 rounded-lg">
+                    <h3 data-key="edu3Title" class="font-bold text-lg text-gray-200">دوره تخصصی سیستم‌های هوش مصنوعی چندعاملی با CrewAI</h3>
+                    <p data-key="edu3Inst" class="text-gray-400">DeepLearning.AI - ۲۰۲۴</p>
+                </div>
+                <div class="card-bg p-6 rounded-lg">
+                    <h3 data-key="edu4Title" class="font-bold text-lg text-gray-200">گواهی هوش مصنوعی (برنامه ملی)</h3>
+                    <p data-key="edu4Inst" class="text-gray-400">بنیاد ملی نخبگان - ۲۰۲۳</p>
+                </div>
+                <div class="card-bg p-6 rounded-lg">
+                    <h3 data-key="edu5Title" class="font-bold text-lg text-gray-200">دوره تخصصی مدل‌های زبان بزرگ (LLM)</h3>
+                    <p data-key="edu5Inst" class="text-gray-400">دانشگاه صنعتی شریف - ۲۰۲۳</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Section -->
+        <section id="community" class="py-24 section-fade-in">
+            <h2 class="section-title">
+                <span class="accent-color font-mono text-2xl" data-key="commTitleNum">05.</span>
+                <span data-key="commTitle" class="me-3">مشارکت در جامعه</span>
+            </h2>
+            <div class="mt-12 space-y-8">
+                <div class="flex items-start gap-4">
+                    <div class="accent-color pt-1"><i class="fas fa-feather-alt"></i></div>
+                    <div>
+                        <h3 data-key="comm1Title" class="font-bold text-lg text-gray-200">نویسنده فعال در لینکدین</h3>
+                        <p data-key="comm1Desc" class="text-gray-400 mt-1">انتشار تحلیل‌های فنی در مورد موضوعات پیشرفته هوش مصنوعی مانند Machine Unlearning، Zero-Shot Learning و Human-Compatible AI.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="accent-color pt-1"><i class="fas fa-globe"></i></div>
+                    <div>
+                        <h3 data-key="comm2Title" class="font-bold text-lg text-gray-200">ترجمه گزارش "State of AI 2025"</h3>
+                        <p data-key="comm2Desc" class="text-gray-400 mt-1">ترجمه و خلاصه‌سازی گزارش صنعت برای افزایش دسترسی جامعه فناوری ایران.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="accent-color pt-1"><i class="fas fa-podcast"></i></div>
+                    <div>
+                        <h3 data-key="comm3Title" class="font-bold text-lg text-gray-200">مدیریت کانال آموزشی "BooksToBrains"</h3>
+                        <p data-key="comm3Desc" class="text-gray-400 mt-1">تولید و توزیع محتوای مرتبط با هوش مصنوعی، شامل خلاصه‌های صوتی کتاب‌های فنی در موضوعاتی مانند محاسبات کوانتومی.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Languages Section -->
+        <section id="languages" class="py-24 section-fade-in">
+            <h2 class="section-title">
+                <span class="accent-color font-mono text-2xl" data-key="langTitleNum">06.</span>
+                <span data-key="langTitle" class="me-3">زبان‌ها</span>
+            </h2>
+            <div class="mt-12 space-y-4">
+                 <div class="flex items-start gap-4">
+                    <div class="accent-color pt-1"><i class="fas fa-language"></i></div>
+                    <div>
+                        <h3 data-key="lang1Name" class="font-bold text-lg text-gray-200">فارسی</h3>
+                        <p data-key="lang1Level" class="text-gray-400 mt-1">زبان مادری</p>
+                    </div>
+                </div>
+                 <div class="flex items-start gap-4">
+                    <div class="accent-color pt-1"><i class="fas fa-language"></i></div>
+                    <div>
+                        <h3 data-key="lang2Name" class="font-bold text-lg text-gray-200">انگلیسی</h3>
+                        <p data-key="lang2Level" class="text-gray-400 mt-1">مهارت حرفه‌ای کاری</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center py-10 section-fade-in">
+            <div class="flex md:hidden justify-center gap-6 mb-4">
+                <a href="https://www.linkedin.com/in/ayda-aghaei-nia/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-accent transition-all duration-300 text-2xl"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/Aydaaghaeinia" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-accent transition-all duration-300 text-2xl"><i class="fab fa-github"></i></a>
+                <a href="tel:09220346532" class="text-gray-400 hover:text-accent transition-all duration-300 text-2xl"><i class="fas fa-phone"></i></a>
+            </div>
+            <p data-key="footerText" class="text-xs text-gray-600 font-mono">&copy; ۲۰۲۴ - طراحی و توسعه یافته برای آیدا آقائی نیا</p>
+        </footer>
+
+    </main>
+    
+    <script>
+    const translations = {
+        fa: {
+            heroName: 'آیدا آقائی نیا',
+            heroTitle: 'من یک توسعه‌دهنده هوش مصنوعی هستم.',
+            heroDescription: 'توسعه‌دهنده هوش مصنوعی با انگیزه، و متخصص در استفاده از مدل‌های زبان بزرگ و سیستم‌های چندوجهی برای خلق برنامه‌های نوآورانه در دنیای واقعی.',
+            contactButton: 'تماس با من',
+            summaryTitleNum: '۰۱.',
+            summaryTitle: 'خلاصه',
+            summaryParagraph: `<p>توسعه‌دهنده هوش مصنوعی با انگیزه بالا و با مجموعه‌ای قوی از پروژه‌های عملی در NLP، بینایی کامپیوتر و هوش مصنوعی مولد. متخصص در استفاده از مدل‌های زبان بزرگ و سیستم‌های چندوجهی برای خلق برنامه‌های نوآورانه در دنیای واقعی. ترکیبی از مهارت‌های فنی عمیق با اشتیاق به مشارکت در جامعه، به اشتراک‌گذاری دانش و کاوش در مرزهای اخلاق و همسوسازی هوش مصنوعی. مشتاق برای کمک به تیمی که در حال ساخت راه‌حل‌های هوش مصنوعی تأثیرگذار و مسئولانه است.</p>`,
+            skillsTitle: 'مهارت‌های فنی',
+            skillsGroupML: 'یادگیری ماشین (ML)',
+            skillML1: 'رگرسیون، طبقه‌بندی',
+            skillML2: 'خوشه‌بندی، کاهش ابعاد',
+            skillML3: 'یادگیری گروهی',
+            skillsGroupDL: 'یادگیری عمیق (Deep Learning)',
+            skillDL1: 'شبکه‌های عصبی مصنوعی، کانولوشنی و بازگشتی',
+            skillDL2: 'ترنسفورمرها، مکانیزم توجه',
+            skillDL3: 'شبکه‌های مولد تخاصمی، خودرمزگذارها',
+            skillsGroupCV: 'بینایی کامپیوتر (CV)',
+            skillCV1: 'طبقه‌بندی تصویر، تشخیص اشیاء',
+            skillCV2: 'بخش‌بندی تصویر',
+            skillCV3: 'تشخیص چهره، هوش هیجانی',
+            skillsGroupNLP: 'پردازش زبان طبیعی (NLP)',
+            skillNLP1: 'طبقه‌بندی متن، تحلیل احساسات',
+            skillNLP2: 'تشخیص موجودیت نام‌دار (NER)',
+            skillNLP3: 'مدل‌سازی زبان',
+            skillsGroupLLM: 'مدل‌های زبان بزرگ (LLM)',
+            skillLLM1: 'مهندسی پرامپت، تنظیم دقیق',
+            skillLLM2: 'تولید مبتنی بر بازیابی (RAG)',
+            skillLLM3: 'مدل‌های چندوجهی',
+            skillsGroupLibs: 'کتابخانه‌ها و ابزارها',
+            skillLibs1: 'PyTorch, TensorFlow, Scikit-learn',
+            skillLibs2: 'Hugging Face, OpenCV, MediaPipe',
+            skillLibs3: 'Docker, Git, FastAPI',
+            expTitleNum: '۰۲.',
+            expTitle: 'سوابق شغلی',
+            expJob1Company: 'آهورا موبایل',
+            expJob2Company: 'Tesco',
+            expJob1CompanyPanel: 'آهورا موبایل',
+            expJob2CompanyPanel: 'Tesco',
+            expJob1Title: 'متخصص پشتیبانی سایت',
+            expJob1Date: '۲۰۲۳ - ۲۰۲۴',
+            expJob1Desc: 'ارائه پشتیبانی فنی و عیب‌یابی برای زیرساخت وب، بهبود عملکرد سایت و تضمین آپ‌تایم بالا از طریق نظارت فعال و حل مشکلات.',
+            expJob2Title: 'مدیریت فروشگاه و پشتیبانی نرم‌افزار',
+            expJob2Date: '۲۰۲۳',
+            expJob2Desc: 'مدیریت نرم‌افزار فروش و محصولات، ارائه پشتیبانی به کاربران و مشاوره به مشتریان برای افزایش رضایت و فروش.',
+            projectsTitleNum: '۰۳.',
+            projectsTitle: 'پروژه‌های منتخب',
+            proj1Title: 'ربات بازی شعر فارسی',
+            proj1Desc: 'ساخت یک ربات شعر که با دریافت آخرین کلمه از یک بیت، بیت بعدی مناسب را برای ادامه بازی پیشنهاد می‌دهد.',
+            proj2Title: 'پردازش گفتار فارسی',
+            proj2Desc: 'تحقیق و توسعه بر روی مدل‌های تبدیل گفتار به نوشتار فارسی، با برنامه‌ریزی برای ساخت مدل CTC مبتنی بر BiLSTM.',
+            proj3Title: 'شخصیت تعاملی هوشمند',
+            proj3Desc: 'طراحی یک کاراکتر انیمیشنی که با استفاده از تشخیص چهره و بدن، به حضور و حرکت افراد در محیط‌های عمومی (مانند مترو) واکنش نشان می‌دهد.',
+            proj5Title: 'سیستم‌های تعاملی و خلاق',
+            proj5Desc: 'طراحی ایده‌هایی مانند "تابلوی آرزوها" که با دریافت متن یا صوت، تصویری از آرزوی کاربر تولید می‌کند.',
+            proj6Title: 'پروژه‌های تحقیقاتی و تست',
+            proj6Desc: 'کار بر روی OCR فارسی (مقایسه EasyOCR و Tesseract) و مشارکت در پروژه‌های اوپن‌سورس مانند AIDE-ML و Habitat-Sim.',
+            eduTitleNum: '۰۴.',
+            eduTitle: 'تحصیلات و گواهینامه‌ها',
+            edu1Title: 'کاردانی مهندسی نرم‌افزار',
+            edu1Inst: 'دانشگاه آزاد اسلامی - ۲۰۲۳',
+            edu2Title: 'برنامه توسعه استارتاپ - از ایده تا خروج',
+            edu2Inst: 'دانشگاه صنعتی شریف - ۲۰۲۴',
+            edu3Title: 'دوره تخصصی سیستم‌های هوش مصنوعی چندعاملی با CrewAI',
+            edu3Inst: 'DeepLearning.AI - ۲۰۲۴',
+            edu4Title: 'گواهی هوش مصنوعی (برنامه ملی)',
+            edu4Inst: 'بنیاد ملی نخبگان - ۲۰۲۳',
+            edu5Title: 'دوره تخصصی مدل‌های زبان بزرگ (LLM)',
+            edu5Inst: 'دانشگاه صنعتی شریف - ۲۰۲۳',
+            commTitleNum: '۰۵.',
+            commTitle: 'مشارکت در جامعه',
+            comm1Title: 'نویسنده فعال در لینکدین',
+            comm1Desc: 'انتشار تحلیل‌های فنی در مورد موضوعات پیشرفته هوش مصنوعی مانند Machine Unlearning، Zero-Shot Learning و Human-Compatible AI.',
+            comm2Title: 'ترجمه گزارش "State of AI 2025"',
+            comm2Desc: 'ترجمه و خلاصه‌سازی گزارش صنعت برای افزایش دسترسی جامعه فناوری ایران.',
+            comm3Title: 'مدیریت کانال آموزشی "BooksToBrains"',
+            comm3Desc: 'تولید و توزیع محتوای مرتبط با هوش مصنوعی، شامل خلاصه‌های صوتی کتاب‌های فنی در موضوعاتی مانند محاسبات کوانتومی.',
+            langTitleNum: '۰۶.',
+            langTitle: 'زبان‌ها',
+            lang1Name: 'فارسی',
+            lang1Level: 'زبان مادری',
+            lang2Name: 'انگلیسی',
+            lang2Level: 'مهارت حرفه‌ای کاری',
+            footerText: '© ۲۰۲۴ - طراحی و توسعه یافته برای آیدا آقائی نیا'
+        },
+        en: {
+            heroName: 'Ayda Aghaei Nia',
+            heroTitle: "I'm an AI Developer.",
+            heroDescription: 'A highly motivated AI Developer, specializing in leveraging Large Language Models and Multi-Modal systems to create innovative, real-world applications.',
+            contactButton: 'Contact Me',
+            summaryTitleNum: '01.',
+            summaryTitle: 'Summary',
+            summaryParagraph: `<p>A highly motivated AI Developer with a strong portfolio of hands-on projects in NLP, Computer Vision, and Generative AI. Specializes in leveraging Large Language Models and Multi-Modal systems to create innovative, real-world applications. Combines deep technical skills with a passion for community engagement, knowledge sharing, and exploring the frontiers of AI ethics and alignment. Eager to contribute to a team that is building impactful and responsible AI solutions.</p>`,
+            skillsTitle: 'Technical Skills',
+            skillsGroupML: 'Machine Learning (ML)',
+            skillML1: 'Regression, Classification',
+            skillML2: 'Clustering, Dimensionality Reduction',
+            skillML3: 'Ensemble Learning',
+            skillsGroupDL: 'Deep Learning',
+            skillDL1: 'ANN, CNN, RNN',
+            skillDL2: 'Transformers, Attention Mechanism',
+            skillDL3: 'GANs, Autoencoders',
+            skillsGroupCV: 'Computer Vision (CV)',
+            skillCV1: 'Image Classification, Object Detection',
+            skillCV2: 'Image Segmentation',
+            skillCV3: 'Face Recognition, Emotion AI',
+            skillsGroupNLP: 'Natural Language Processing (NLP)',
+            skillNLP1: 'Text Classification, Sentiment Analysis',
+            skillNLP2: 'Named Entity Recognition (NER)',
+            skillNLP3: 'Language Modeling',
+            skillsGroupLLM: 'Large Language Models (LLM)',
+            skillLLM1: 'Prompt Engineering, Fine-tuning',
+            skillLLM2: 'Retrieval-Augmented Generation (RAG)',
+            skillLLM3: 'Multi-Modal Models',
+            skillsGroupLibs: 'Libraries & Tools',
+            skillLibs1: 'PyTorch, TensorFlow, Scikit-learn',
+            skillLibs2: 'Hugging Face, OpenCV, MediaPipe',
+            skillLibs3: 'Docker, Git, FastAPI',
+            expTitleNum: '02.',
+            expTitle: 'Professional Experience',
+            expJob1Company: 'Ahura Mobile',
+            expJob2Company: 'Tesco',
+            expJob1CompanyPanel: 'Ahura Mobile Company',
+            expJob2CompanyPanel: 'Tesco',
+            expJob1Title: 'Site Support Specialist',
+            expJob1Date: '2023 – 2024',
+            expJob1Desc: 'Provided technical support and troubleshooting for web infrastructure, enhancing site performance and ensuring high uptime through proactive monitoring and issue resolution.',
+            expJob2Title: 'Store Management and Software Support',
+            expJob2Date: '2023',
+            expJob2Desc: 'Managed sales and product management software, providing user support and training while advising customers to increase satisfaction and drive sales.',
+            projectsTitleNum: '03.',
+            projectsTitle: 'Featured Projects',
+            proj1Title: 'Persian Poetry Game Bot',
+            proj1Desc: 'Built a poetry bot that suggests the next verse in a poetic game by taking the last word of the previous verse.',
+            proj2Title: 'Persian Speech Processing',
+            proj2Desc: 'R&D on Persian Speech-to-Text models, with plans to build a CTC-based model with BiLSTM for Persian speech recognition.',
+            proj3Title: 'Interactive Smart Character',
+            proj3Desc: 'Designed an animated character that interacts with people in public spaces like subways by reacting to their presence and movements using body/face detection.',
+            proj5Title: 'Creative & Interactive Systems',
+            proj5Desc: 'Ideation of projects like a "Wish Board" that generates an image of a user\'s wish from text or voice input.',
+            proj6Title: 'R&D and Testing Projects',
+            proj6Desc: 'Worked on Persian OCR (comparing EasyOCR and Tesseract) and contributed to open-source projects like AIDE-ML and Habitat-Sim.',
+            eduTitleNum: '04.',
+            eduTitle: 'Education & Certifications',
+            edu1Title: 'Associate of Science in Software Engineering',
+            edu1Inst: 'Islamic Azad University - 2023',
+            edu2Title: 'From Idea to Exit - Startup Development Program',
+            edu2Inst: 'Sharif University of Technology - 2024',
+            edu3Title: 'Specialized Course in Multi-Agent AI Systems with CrewAI',
+            edu3Inst: 'DeepLearning.AI - 2024',
+            edu4Title: 'Certificate in Artificial Intelligence (National AI Program)',
+            edu4Inst: 'National Elite Foundation - 2023',
+            edu5Title: 'Specialized Course in Large Language Models',
+            edu5Inst: 'Sharif University of Technology - 2023',
+            commTitleNum: '05.',
+            commTitle: 'Community Engagement',
+            comm1Title: 'Active Writer on LinkedIn',
+            comm1Desc: 'Actively writes and publishes technical analyses on LinkedIn, exploring advanced AI topics such as Machine Unlearning, Zero-Shot Learning, and Human-Compatible AI.',
+            comm2Title: 'Translation of "State of AI 2025" Report',
+            comm2Desc: 'Translated and summarized the industry report to increase accessibility for the local technology community in Iran.',
+            comm3Title: 'Manages "BooksToBrains" Educational Channel',
+            comm3Desc: 'Creates and distributes AI-related content, including audio summaries of technical books on topics like Quantum Computing.',
+            langTitleNum: '06.',
+            langTitle: 'Languages',
+            lang1Name: 'Persian',
+            lang1Level: 'Native',
+            lang2Name: 'English',
+            lang2Level: 'Professional Working Proficiency',
+            footerText: '© 2024 - Designed & Developed for Ayda Aghaei Nia'
+        }
+    };
+
+    function setLanguage(lang) {
+        const html = document.documentElement;
+        html.setAttribute('lang', lang);
+        html.setAttribute('dir', lang === 'fa' ? 'rtl' : 'ltr');
+
+        document.querySelectorAll('[data-key]').forEach(element => {
+            const key = element.getAttribute('data-key');
+            if (translations[lang][key]) {
+                element.innerHTML = translations[lang][key];
+            }
+        });
+
+        document.querySelectorAll('.lang-switcher').forEach(btn => {
+            if (btn.getAttribute('data-lang') === lang) {
+                btn.classList.add('text-accent');
+                btn.classList.remove('text-gray-400');
+            } else {
+                btn.classList.remove('text-accent');
+                btn.classList.add('text-gray-400');
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- LANGUAGE SWITCHER ---
+        const langSwitchers = document.querySelectorAll('.lang-switcher');
+        langSwitchers.forEach(switcher => {
+            switcher.addEventListener('click', (e) => {
+                setLanguage(e.target.getAttribute('data-lang'));
+            });
+        });
+
+        // --- FADE-IN ANIMATION ---
+        const sections = document.querySelectorAll('.section-fade-in');
+        const sectionObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    const children = entry.target.querySelectorAll('div, p, h1, h2, h3, h4, ul, a, button, strong');
+                    children.forEach((child, index) => {
+                        child.style.animationDelay = `${index * 100}ms`;
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        sections.forEach(section => sectionObserver.observe(section));
+
+        // --- EXPERIENCE TABS ---
+        const tabs = document.querySelectorAll('.tab-button');
+        const panels = document.querySelectorAll('.tab-panel');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const panelId = tab.getAttribute('data-tab');
+                panels.forEach(p => p.classList.add('hidden'));
+                document.querySelector(`[data-panel="${panelId}"]`).classList.remove('hidden');
+            });
+        });
+
+        // --- STICKY HEADER ---
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // --- BACKGROUND SPOTLIGHT ---
+        document.addEventListener('mousemove', e => {
+            document.documentElement.style.setProperty('--mouse-x', e.clientX + 'px');
+            document.documentElement.style.setProperty('--mouse-y', e.clientY + 'px');
+        });
+
+        // --- PRELOADER ---
+        const preloader = document.getElementById('preloader');
+        window.addEventListener('load', () => {
+            preloader.classList.add('loaded');
+        });
+
+        // Initialize with default language
+        setLanguage('fa');
+    });
+    </script>
+</body>
+</html>
+
